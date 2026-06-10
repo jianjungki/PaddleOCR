@@ -1,4 +1,4 @@
-name: Build PaddleOCR OpenAI CPU Image
+name: Build PaddleOCR OpenAI GPU Image
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
       - release/*
     paths:
       - 'deploy/docker/openai_api/**'
-      - '.github/workflows/build-paddleocr-openai-image.yml'
+      - '.github/workflows/build-paddleocr-openai-image-gpu.yml'
   workflow_dispatch: {}
 
 permissions:
@@ -34,13 +34,13 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push PaddleOCR OpenAI CPU image
+      - name: Build and push PaddleOCR OpenAI GPU image
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: deploy/docker/openai_api/Dockerfile
+          file: deploy/docker/openai_api/Dockerfile.gpu
           platforms: linux/amd64
           push: true
           tags: |
-            ghcr.io/${{ github.repository_owner }}/paddleocr-openai:cpu-latest
-            ghcr.io/${{ github.repository_owner }}/paddleocr-openai:cpu-${{ github.sha }}
+            ghcr.io/${{ github.repository_owner }}/paddleocr-openai:gpu-latest
+            ghcr.io/${{ github.repository_owner }}/paddleocr-openai:gpu-${{ github.sha }}

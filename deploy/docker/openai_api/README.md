@@ -4,8 +4,16 @@ This image builds a PaddleOCR HubServing backend and exposes a lightweight OpenA
 
 ## Build
 
+CPU image:
+
 ```bash
-docker build -t paddleocr-openai -f deploy/docker/openai_api/Dockerfile .
+docker build -t paddleocr-openai-cpu -f deploy/docker/openai_api/Dockerfile .
+```
+
+GPU image:
+
+```bash
+docker build -t paddleocr-openai-gpu -f deploy/docker/openai_api/Dockerfile.gpu .
 ```
 
 ## Run

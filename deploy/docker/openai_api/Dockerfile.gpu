@@ -1,20 +1,25 @@
-FROM python:3.10-slim
+FROM nvidia/cuda:11.8.0-runtime-ubuntu22.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    python3 \
+    python3-distutils \
+    python3-venv \
+    python3-pip \
     git \
     curl \
     libgl1 \
     libglib2.0-0 \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && update-alternatives --install /usr/bin/python python /usr/bin/python3 1
 
 WORKDIR /PaddleOCR
 
 COPY . /PaddleOCR
 
 RUN python -m pip install --upgrade pip setuptools wheel
-RUN python -m pip install paddlepaddle==3.2.0 -i https://www.paddlepaddle.org.cn/packages/stable/cpu/
+RUN python -m pip install paddlepaddle-gpu==3.2.0 -i https://www.paddlepaddle.org.cn/packages/stable/cu118/
 RUN python -m pip install paddlehub fastapi uvicorn[standard] requests -i https://mirror.baidu.com/pypi/simple
 RUN python -m pip install -r requirements.txt
 RUN chmod +x /PaddleOCR/deploy/docker/openai_api/entrypoint.sh
