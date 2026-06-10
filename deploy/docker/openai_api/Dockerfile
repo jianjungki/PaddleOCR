@@ -15,7 +15,7 @@ COPY . /PaddleOCR
 
 RUN python -m pip install --upgrade pip setuptools wheel
 RUN python -m pip install paddlepaddle==3.2.0 -i https://www.paddlepaddle.org.cn/packages/stable/cpu/
-RUN python -m pip install paddlehub fastapi uvicorn[standard] requests -i https://mirror.baidu.com/pypi/simple
+RUN python -m pip install paddlehub==2.1.0 fastapi uvicorn[standard] requests -i https://mirrors.aliyun.com/pypi/simple/
 RUN python -m pip install -r requirements.txt
 RUN chmod +x /PaddleOCR/deploy/docker/openai_api/entrypoint.sh
 
